@@ -69,15 +69,15 @@ for dicti, pollutant in zip(pollutant_dicts, Pollutants):
 #we only need to pick two variables
 pick = ['Date Local', 'Arithmetic Mean']
 
-for dict in pollutant_dicts:
+for dicti in pollutant_dicts:
     #Just need two variables, the pollution reading and the date
-    dict['total'] = dict['total'][pick]
+    dicti['total'] = dict['total'][pick]
     
     #convert to date time
-    dict['total']['Date Local'] = pd.to_datetime(dict['total']['Date Local'])
+    dicti['total']['Date Local'] = pd.to_datetime(dict['total']['Date Local'])
     
     #sort for merge
-    dict['total'] = dict['total'].sort_values('Date Local')
+    dicti['total'] = dict['total'].sort_values('Date Local')
 
 
 # In[60]:

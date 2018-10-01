@@ -1,10 +1,6 @@
 import pandas as pd
 import requests, zipfile, io
 
-
-# In[54]:
-
-
 #first year to be considered
 t0 = 2003 
 

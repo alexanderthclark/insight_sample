@@ -103,7 +103,9 @@ df_pollution = pd.merge_asof(df_pollution, Temperature['total'], on='Date Local'
 
 #Downloaded from IPUMS
 #this tells me who is in LA
-df_LA = pd.read_csv('atux_LA.csv')
+url = 'https://sites.google.com/site/alexanderthclark/ATUX_LA.csv?attredirects=0&d=1'
+df_LA = pd.read_csv(url)
+#df_LA = pd.read_csv('atux_LA.csv') local
 
 #we only need the ID numbers to link to the other dataset. 
 df_LA = df_LA[['caseid']]

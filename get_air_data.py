@@ -1,15 +1,3 @@
-
-# coding: utf-8
-
-# In[52]:
-
-
-###This file gather 
-
-
-# In[53]:
-
-
 import pandas as pd
 import requests, zipfile, io
 

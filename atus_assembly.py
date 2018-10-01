@@ -38,7 +38,7 @@ act_LA = pd.merge(df_LA, ATUS['act'], left_on='caseid', right_on='TUCASEID')
 resp_LA = resp_LA[['TUCASEID', 'TUDIARYDATE', 'TUMONTH', 'TRERNHLY']]
 
 
-nrow= resp_LA.shape[0]
+nrow = resp_LA.shape[0]
 #get diary date as datetime
 for row in range(0,nrow):
     string = str(resp_LA.loc[resp_LA.index[row],'TUDIARYDATE'])

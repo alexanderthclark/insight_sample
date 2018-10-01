@@ -1,9 +1,3 @@
-
-# coding: utf-8
-
-# In[52]:
-
-
 ###This file gather daily air data and time use data.
 ###We match air data to time use on date.
 ###Produces a dataframe of a user's time use on a diary day.
@@ -13,14 +7,10 @@
         #Time spent on activities before bed
 
 
-# In[2]:
-
 
 import pandas as pd
 import requests, zipfile, io
 
-
-# In[66]:
 
 
 #first year to be considered
@@ -45,7 +35,6 @@ Pollutants = { "NO2":42602, "Ozone":44201,"SO2":42401,"CO":42101,
               "PM25S":"SPEC", "PM10S":"PM10SPEC", "Temperature":"TEMP"}
 
 
-# In[67]:
 
 
 #we create empty dictionaries for every pollutant and assemble into a list
@@ -54,7 +43,6 @@ pollutant_dicts = [NO2, Ozone, SO2, CO, PMFRM, PMnonFRM, PM10, PM25S, PM10S, Tem
 #must stay in the same order as in the Pollutants dictionary
 
 
-# In[68]:
 
 
 ##creates pollution dataframes
@@ -74,7 +62,6 @@ for dicti, pollutant in zip(pollutant_dicts, Pollutants):
         dicti['total'] = dicti['total'].append(dicti[y])
 
 
-# In[69]:
 
 
 #we only need to pick two variables
@@ -94,7 +81,6 @@ for dicti, name in zip(pollutant_dicts, pollutant_list):
     dicti['total'] = dicti['total'].rename(columns={'Arithmetic Mean': name})
 
 
-# In[71]:
 
 
 #Merge all pollution data into one df. 
@@ -114,8 +100,6 @@ df_pollution = pd.merge_asof(df_pollution, Temperature['total'], on='Date Local'
 #df_pollution.to_csv('df_pollution.csv')
 
 
-# In[11]:
-
 
 #Downloaded from IPUMS
 #this tells me who is in LA
@@ -125,7 +109,6 @@ df_LA = pd.read_csv('atux_LA.csv')
 df_LA = df_LA[['caseid']]
 
 
-# In[83]:
 
 
 ##Import time use data from 2003 to 2016
@@ -146,8 +129,6 @@ for file in files:
     ATUS[file] = pd.read_csv(z.open(ending))
 
 
-# In[84]:
-
 
 #merge to reduce to LA people
 sum_LA = pd.merge(df_LA, ATUS['sum'], left_on='caseid', right_on='TUCASEID')
@@ -167,7 +148,6 @@ for row in range(0,nrow):
 resp_LA['Date2'] = pd.to_datetime(resp_LA['Date2'])
 
 
-# In[86]:
 
 
 #The summary file is of interest because it gives total time
@@ -203,7 +183,6 @@ relevant_sum_features = list ( set(summary_features) - set(unnec_sum_features) )
 #now this only includes basic controls and time use activities
 
 
-# In[87]:
 
 
 #Get a list of all the people in LA
@@ -218,7 +197,6 @@ for person in LA_list:
     Piv_act[person] = act_LA[act_LA['TUCASEID']==person].pivot(columns='TRCODEP', values=['TUSTARTTIM','TUACTDUR'])
 
 
-# In[88]:
 
 
 ## Because we are concerned with time use that affects
@@ -232,7 +210,6 @@ no_sleepers = list( sum_LA[no_sleep]['TUCASEID'] )
 LA_sleepers = list( set(LA_list)-set(no_sleepers) )
 
 
-# In[89]:
 
 
 #tried to sleep
@@ -242,7 +219,6 @@ no_sleep_or_sleepless = sum_LA['t010101'] + sum_LA['t010102'] > 0
 LA_universe = list( sum_LA[no_sleep_or_sleepless]['TUCASEID'] )
 
 
-# In[90]:
 
 
 #could not sleep but tried
@@ -250,7 +226,6 @@ only_sleepless = sum_LA['t010102'] > 0
 only_sleepless_list = list( sum_LA[no_sleep & only_sleepless]['TUCASEID'] )
 
 
-# In[91]:
 
 
 #I want to identify the time use across various activities that precede sleeping
@@ -275,7 +250,6 @@ for person in sorted(LA_sleepers):
     Flat_act[person] =  activities_before_bed.groupby('dummy').max()
 
 
-# In[92]:
 
 
 #same as above but for people who tried but couldn't sleep
@@ -289,8 +263,6 @@ for person in sorted(only_sleepless_list):
     Flat_act[person] =  activities_before_bed.groupby('dummy').max()
 
 
-# In[93]:
-
 
 #put this activity into a new df
 
@@ -301,7 +273,6 @@ for person in sorted(LA_universe):
     sum_before_bed = sum_before_bed.append(Flat_act[person])
 
 
-# In[94]:
 
 
 #create the df we will run the model with 
@@ -310,14 +281,12 @@ df_run = pd.merge(resp_LA, sum_LA[relevant_sum_features],on='TUCASEID')
 df_run = pd.merge(df_run, sum_before_bed, on='TUCASEID')
 
 
-# In[95]:
 
 
 #time use by itself
 #df_run.to_csv('df_run.csv')
 
 
-# In[96]:
 
 
 #sort for a merge
@@ -327,8 +296,6 @@ df_run = df_run.sort_values('Date2')
 master_df = pd.merge_asof(df_run[df_run['TUYEAR'] < T], df_pollution, left_on='Date2', right_on='Date Local', direction='nearest')
 
 
-# In[97]:
 
 
 master_df.to_csv('master_df.csv')
-

@@ -45,3 +45,10 @@ tr = tr.fit(x, y, cens, verbose=False)
 #coefficients!
 list( zip(features,list(tr.coef_)) )
 
+
+print(coefficients)
+
+print('Warning to user: Python does not have a well supported tobit package. \
+	What I use here does not allow for (correct) retrieval of the intercept.')
+
+print('Use R or Stata for a final model.')

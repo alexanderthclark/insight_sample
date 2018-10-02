@@ -11,9 +11,9 @@ I tried to find predictors of sleeplessness (as a continuous response variable, 
 
 I've set the defaults in the file to download less data than I used for my project. This is done for speed.
 
-See https://www.bls.gov/tus/ for additional documentation and data on the American Time Use Survey.
+See https://www.bls.gov/tus/ for additional documentation and data on the American Time Use Survey. This is necessary to interpret variable names as they follow a naming convention. Those time use variables prefixed by a 't' refer to time spent on the activity throughout the day. I create, without the 't,' variables for time use before bed. 
 
-See https://www.ipums.org/ for an ATUS data extract system. 
+See https://www.ipums.org/ for an ATUS data extract system.
 
 ### feature selection
 *simplified_feat_selection_function.py* is a function that runs two random forests to give a list of features that meet an importance threshold. I also used lasso regularization on a dataset that dropped the users not experiencing sleeplessness. 

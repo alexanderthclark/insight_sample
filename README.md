@@ -20,3 +20,7 @@ See https://www.ipums.org/ for an ATUS data extract system.
 
 ### tobit to accommodate censored data
 Because the sleeplessness level for a user is censored from below at zero, I use a tobit regression to predict a latent sleeplessness score. I have provided *tobit_reg.py* for this, but I strongly discourage using Python for running a tobit regression if you are unconstrained. 
+
+## How to Run
+
+*data_assembly.py* is the only input needed. However, more feature engineering/selection will be needed. *simplified_feat_selection_function.py* can help determine important features or off-the-shelf regularization like Lasso or elastic net could be used. Interaction variables should be considered. Once a list of features is selected, this can be input in *tobit_reg.py* to obtain the marginal effects. 

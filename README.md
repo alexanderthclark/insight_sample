@@ -19,7 +19,7 @@ See https://www.ipums.org/ for an ATUS data extract system.
 *simplified_feat_selection_function.py* is a function that runs two random forests to give a list of features that meet an importance threshold. I also used lasso regularization on a dataset that dropped the users not experiencing sleeplessness. 
 
 ### tobit to accommodate censored data
-Because the sleeplessness level for a user is censored from below at zero, I use a tobit regression to predict a latent sleeplessness score. I have provided *tobit_reg.py* for this, but I strongly discourage using Python for running a tobit regression if you are unconstrained. 
+Because the sleeplessness level for a user is censored from below at zero, I use a tobit regression to predict a latent sleeplessness score. I have provided *tobit_reg.py* for this, but I strongly discourage using Python for running a tobit regression if you are unconstrained. Uses *tobit.py* from https://github.com/jamesdj/tobit. 
 
 ## How to Run
 
